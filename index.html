@@ -33,10 +33,12 @@
 </head>
 <body class="no-app">    
     <div id="fb-root"></div>
+    
+    <div class="fb-login-button" data-width="300px" data-size="large" data-button-type="continue_with" data-auto-logout-link="false" data-use-continue-as="true"></div>
+    
     <script async defer crossorigin="anonymous" 
             src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v3.3&appId=160070797414935&autoLogAppEvents=1">
     </script>
-    
     <script>
       window.fbAsyncInit = function() {
         FB.init({
