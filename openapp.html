@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <title>Redirect...</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script>
+      var appurl = 'fb785478014939590://open';
+      var appstore = 'https://apps.apple.com/tw/app/%E5%A4%A2%E6%99%82%E4%BB%A3-%E9%AB%98%E9%9B%84%E6%99%82%E4%BB%A3%E7%99%BE%E8%B2%A8/id1195487642';
+  
+      var timeout;
+      function start() {
+        window.location = appurl;
+        timeout = setTimeout(function(){
+          if(confirm('馬上安裝夢時代APP?')){
+            document.location = appstore;
+          }
+        }, 1000);
+      }
+  
+      window.onload = function() {
+        start()
+      }
+    </script>
+  </head>
+  <body>
+  
+  </body>
+  </html>
