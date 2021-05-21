@@ -1,97 +1,19 @@
-<!-- https://support.google.com/youtube/answer/171780?hl=zh-Hant#zippy=%2C%E8%87%AA%E5%8B%95%E6%92%AD%E6%94%BE%E5%85%A7%E5%B5%8C%E5%BD%B1%E7%89%87 -->
-<!-- https://lis.mcut.edu.tw/p/406-1013-41640,r11.php?Lang=zh-tw -->
-
-<!-- 參考案例：https://connect2020.techorange.com/livestudios/ovo_bukalapak -->
-<!-- https://www.youtube.com/embed/wyZW6YvMFtI?origin=https%3A%2F%2Fconnect2020.techorange.com&playsinline=1&enablejsapi=1&widgetid=1 -->
-
-<!-- origin=http%3A%2F%2F127.0.0.1:5500 -->
-
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-
-  <script>
-    // 2. This code loads the IFrame Player API code asynchronously.
-    var tag = document.createElement('script');
-
-    tag.src = "https://www.youtube.com/iframe_api";
-    var firstScriptTag = document.getElementsByTagName('script')[0];
-    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-    // 3. This function creates an <iframe> (and YouTube player)
-    //    after the API code downloads.
-    var player;
-
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('player', {
-        height: '390',
-        width: '640',
-        videoId: 'v1vzL9mMZXQ',
-        playerVars: {
-          'playsinline': 1,
-          'enablejsapi': 1
-        },
-        events: {
-          'onReady': onPlayerReady,
-          'onStateChange': onPlayerStateChange
+    <title>Looping Audio</title>
+    <script type="text/javascript">
+        function init() {
+            var myAudio = document.getElementById("audio");
+            myAudio.addEventListener('ended', loopAudio, false);
         }
-      });
-    }
-
-    // 4. The API will call this function when the video player is ready.
-    function onPlayerReady(event) {
-      event.target.playVideo();
-    }
-
-    // 5. The API calls this function when the player's state changes.
-    //    The function indicates that when playing a video (state=1),
-    //    the player should play for six seconds and then stop.
-    var done = false;
-
-    function onPlayerStateChange(event) {
-      if (event.data == YT.PlayerState.PLAYING && !done) {
-        setTimeout(stopVideo, 6000);
-        done = true;
-      }
-    }
-
-    function stopVideo() {
-      player.stopVideo();
-    }
-  </script>
+        function loopAudio() {
+            var myAudio = document.getElementById("audio");
+            myAudio.play();
+        }
+    </script>
 </head>
-
-<body>
-  <style>
-    .embed-container {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-      max-width: 100%;
-    }
-
-    .embed-container iframe,
-    .embed-container object,
-    .embed-container embed {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-  </style>
-  <div class='embed-container'>
-    <iframe frameborder='0' allowfullscreen="1" title="館長三公分" width='560' height='315'
-      allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-      src='https://www.youtube.com/embed/v1vzL9mMZXQ?rel=0&origin=https://JefferyJeffery.github.io&enablejsapi=1&playsinline=1&widgetid=1&autoplay=1'
-      id="widget2"></iframe>
-  </div>
+<body onload="init();">
+    <audio id="audio" src="myAudio.m4a" controls></audio>
 </body>
-
 </html>
