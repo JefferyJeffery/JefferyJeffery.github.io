@@ -1,5 +1,4 @@
-<!-- https://www.minwt.com/webdesign-dev/html/22143.html -->
-<!-- https://developer.apple.com/documentation/webkit/delivering_video_content_for_safari#3030250 -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,40 +7,81 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <script async src="//www.youtube.com/iframe_api"></script>
-  <style>iframe{width: 100vw; height: 100vh;}</style>
+  <style>
+    .embed-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+    }
+
+    .embed-container iframe,
+    .embed-container object,
+    .embed-container embed {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
 </head>
 
 <body>
-  <div id="YouTubeVideoPlayerAPI"></div>
-
+  <div class='embed-container'>
+    <iframe frameborder='0' allowfullscreen="1" title="館長三公分" width='560' height='315'
+      allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+      src='https://www.youtube.com/embed/EAxEqr0bg9w?rel=0&origin=https://jefferyjeffery.github.io&enablejsapi=1&playsinline=1&widgetid=1'
+      id="widget2"></iframe>
+  </div>
   <script>
+    // 2. This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
+    tag.id = 'iframe-demo';
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // 3. This function creates an <iframe> (and YouTube player)
+    //    after the API code downloads.
+    var player;
+
     function onYouTubeIframeAPIReady() {
-      var player;
-      player = new YT.Player('YouTubeVideoPlayerAPI', {
-        videoId: 'rshfNb2ped8', // YouTube 影片ID
-        width: '1080', // 播放器寬度 (px)
-        height: '720', // 播放器高度 (px)
+      player = new YT.Player('widget2', {
+        height: '390',
+        width: '640',
+        videoId: 'EAxEqr0bg9w',
         playerVars: {
-          autoplay: 1, // 自動播放影片
-          controls: 1, // 顯示播放器
-          showinfo: 0, // 隱藏影片標題
-          modestbranding: 0, // 隱藏YouTube Logo
-          loop: 0, // 重覆播放
-          playlist: 'rshfNb2ped8', // 當使用影片要重覆播放時，需再輸入YouTube 影片ID
-          fs: 0, // 隱藏全螢幕按鈕
-          cc_load_policty: 0, // 隱藏字幕
-          iv_load_policy: 3, // 隱藏影片註解
-          autohide: 0, // 影片播放時，隱藏影片控制列
-          playsinline: 1,
+          'playsinline': 1,
+          'enablejsapi': 1
         },
         events: {
-          onReady: function (e) {
-            e.target.mute(); //播放時靜音
-            e.target.playVideo(); //強制播放(手機才會自動播放，但僅限於Android)
-          }
+          'onReady': onPlayerReady,
+          'onStateChange': onPlayerStateChange
         }
       });
+    }
+
+    // 4. The API will call this function when the video player is ready.
+    function onPlayerReady(event) {
+      event.target.playVideo();
+    }
+
+    // 5. The API calls this function when the player's state changes.
+    //    The function indicates that when playing a video (state=1),
+    //    the player should play for six seconds and then stop.
+    var done = false;
+
+    function onPlayerStateChange(event) {
+      if (event.data == YT.PlayerState.PLAYING && !done) {
+        setTimeout(stopVideo, 6000);
+        done = true;
+      }
+    }
+
+    function stopVideo() {
+      player.stopVideo();
     }
   </script>
 </body>
