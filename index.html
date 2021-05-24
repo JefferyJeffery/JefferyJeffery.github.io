@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>石門水庫即時影像</title>
   <style>
     .embed-container {
       position: relative;
@@ -32,7 +31,7 @@
   <div class='embed-container'>
     <iframe frameborder='0' allowfullscreen="1" title="館長三公分" width='560' height='315'
       allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-      src='https://www.youtube.com/embed/j52pB2UwNAw?rel=0&origin=https://jefferyjeffery.github.io&enablejsapi=1&playsinline=1&widgetid=1'
+      src='https://www.youtube.com/embed/1OTZ9rjFv78?rel=0&origin=http://127.0.0.1:5500&enablejsapi=1&playsinline=1&widgetid=1'
       id="widget2"></iframe>
   </div>
   <script>
@@ -51,14 +50,15 @@
       player = new YT.Player('widget2', {
         height: '390',
         width: '640',
-        videoId: 'j52pB2UwNAw',
+        videoId: '1OTZ9rjFv78',
         playerVars: {
           'playsinline': 1,
           'enablejsapi': 1
         },
         events: {
           'onReady': onPlayerReady,
-          'onStateChange': onPlayerStateChange
+          'onStateChange': onPlayerStateChange,
+          'onError': onPlayerError
         }
       });
     }
@@ -75,9 +75,57 @@
     var done = false;
 
     function onPlayerStateChange(event) {
-      if (event.data == YT.PlayerState.PLAYING && !done) {
-        setTimeout(stopVideo, 6000);
-        done = true;
+      console.log('onPlayerStateChange: ', player.getPlayerState());
+      
+      switch (player.getPlayerState()) {
+        case -1 : //-1 unstarted:
+          
+          break;
+          
+          case 0 : // 0  ended
+
+          break;
+          
+          case 1 : // 1  playing
+            if (!done) {
+              // setTimeout(stopVideo, 6000);
+              done = true;
+            }
+
+            // setTimeout(stopVideo, 6000);
+            done = true;
+          break;
+          
+          case 2 : // 2  paused
+        
+          break;
+          
+          case 3 : // 3  buffering
+
+          break;
+
+          case 5 : // 5  video cued
+
+          break;
+
+        default:
+          break;
+      }
+    }
+
+    function onPlayerError(event) {
+      console.log('onPlayerError: ', event.data === 150 );
+
+      if (event.data === 2) {
+        console.log('The request contains an invalid parameter value. For example, this error occurs if you specify a video ID that does not have 11 characters, or if the video ID contains invalid characters, such as exclamation points or asterisks.');
+      } else if (event.data === 5) {
+        console.log('The requested content cannot be played in an HTML5 player or another error related to the HTML5 player has occurred.');
+      } else if (event.data === 100) {
+        console.log('The video requested was not found. This error occurs when a video has been removed (for any reason) or has been marked as private.');
+      } else if (event.data === 101) {
+        console.log('The owner of the requested video does not allow it to be played in embedded players.');
+      } else if (event.data === 150) {
+        console.log('The owner of the requested video does not allow it to be played in embedded players.');
       }
     }
 
