@@ -7,6 +7,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>石門水庫即時影像</title>
   <style>
+    .content {
+      display: flex;
+    }
+
+    .content>.video {
+      flex: 0 0 80%;
+    }
+
+    .content>.chat {
+      flex: 0 0 20%;
+    }
+
     .embed-container {
       position: relative;
       padding-bottom: 56.25%;
@@ -24,15 +36,40 @@
       width: 100%;
       height: 100%;
     }
+
+    .embed-chat {
+      position: relative;
+      padding-bottom: 225%;
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+    }
+
+    .embed-chat iframe,
+    .embed-chat object,
+    .embed-chat embed {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
   </style>
 </head>
 
 <body>
-  <div class='embed-container'>
-    <iframe frameborder='0' allowfullscreen="1" title="館長三公分" width='560' height='315'
-      allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-      src='https://www.youtube.com/embed/1OTZ9rjFv78?rel=0&enablejsapi=1&playsinline=1&widgetid=1&origin=https://jefferyjeffery.github.io'
-      id='widget2'></iframe>
+  <div class="content">
+    <div class="video">
+      <div class='embed-container'>
+        <iframe frameborder='0' allowfullscreen="1" title="石門水庫即時影像" width='560' height='315'
+          allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
+          src='https://www.youtube.com/embed/1OTZ9rjFv78?rel=0&enablejsapi=1&playsinline=1&widgetid=1&origin=https://jefferyjeffery.github.io'
+          id="widget2"></iframe>
+      </div>
+    </div>
+    <div class="chat">
+      <div id='youtube-chat-wrapper' class='embed-chat'></div>
+    </div>
   </div>
   <script>
     // 2. This code loads the IFrame Player API code asynchronously.
@@ -77,32 +114,32 @@
 
     function onPlayerStateChange(event) {
       console.log('onPlayerStateChange: ', player.getPlayerState());
-      
+
       switch (player.getPlayerState()) {
-        case -1 : //-1 unstarted:
-          
-          break;
-          
-          case 0 : // 0  ended
-
-          break;
-          
-          case 1 : // 1  playing
-            if (!done) {
-              // setTimeout(stopVideo, 6000);
-              done = true;
-            }
-          break;
-          
-          case 2 : // 2  paused
-        
-          break;
-          
-          case 3 : // 3  buffering
+        case -1: //-1 unstarted:
 
           break;
 
-          case 5 : // 5  video cued
+        case 0: // 0  ended
+
+          break;
+
+        case 1: // 1  playing
+          if (!done) {
+            // setTimeout(stopVideo, 6000);
+            done = true;
+          }
+          break;
+
+        case 2: // 2  paused
+
+          break;
+
+        case 3: // 3  buffering
+
+          break;
+
+        case 5: // 5  video cued
 
           break;
 
@@ -112,14 +149,20 @@
     }
 
     function onPlayerError(event) {
-      console.log('onPlayerError: ', event.data === 150 );
+      console.log('onPlayerError: ', event.data === 150);
 
       if (event.data === 2) {
-        console.log('The request contains an invalid parameter value. For example, this error occurs if you specify a video ID that does not have 11 characters, or if the video ID contains invalid characters, such as exclamation points or asterisks.');
+        console.log(
+          'The request contains an invalid parameter value. For example, this error occurs if you specify a video ID that does not have 11 characters, or if the video ID contains invalid characters, such as exclamation points or asterisks.'
+          );
       } else if (event.data === 5) {
-        console.log('The requested content cannot be played in an HTML5 player or another error related to the HTML5 player has occurred.');
+        console.log(
+          'The requested content cannot be played in an HTML5 player or another error related to the HTML5 player has occurred.'
+          );
       } else if (event.data === 100) {
-        console.log('The video requested was not found. This error occurs when a video has been removed (for any reason) or has been marked as private.');
+        console.log(
+          'The video requested was not found. This error occurs when a video has been removed (for any reason) or has been marked as private.'
+          );
       } else if (event.data === 101) {
         console.log('The owner of the requested video does not allow it to be played in embedded players.');
       } else if (event.data === 150) {
@@ -130,6 +173,20 @@
     function stopVideo() {
       player.stopVideo();
     }
+  </script>
+
+  <script>
+    let frame = document.createElement("iframe");
+    frame.width='560';
+    frame.height='800';
+    frame.frameborder='0';
+    frame.allowfullscreen="1";
+    frame.referrerPolicy = "origin";
+    frame.src = "https://www.youtube.com/live_chat?v=1OTZ9rjFv78&embed_domain=" + window.location.hostname;
+    frame.frameBorder = "0";
+    frame.id = "chat-embed";
+    let wrapper = document.getElementById("youtube-chat-wrapper");
+    wrapper.appendChild(frame);
   </script>
 </body>
 
