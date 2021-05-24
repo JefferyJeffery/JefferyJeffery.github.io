@@ -31,7 +31,7 @@
   <div class='embed-container'>
     <iframe frameborder='0' allowfullscreen="1" title="館長三公分" width='560' height='315'
       allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'
-      src='https://www.youtube.com/embed/1OTZ9rjFv78?rel=0&origin=https://jefferyjeffery.github.io'
+      src='https://www.youtube.com/embed/1OTZ9rjFv78?rel=0&enablejsapi=1&playsinline=1&widgetid=1&origin=http://jefferyjeffery.github.io'
       id="widget2"></iframe>
   </div>
   <script>
@@ -48,14 +48,14 @@
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('widget2', {
-        height: '390',
-        width: '640',
-        videoId: '1OTZ9rjFv78',
-        playerVars: {
-          'widgetid': 1,
-          'playsinline': 1,
-          'enablejsapi': 1
-        },
+        // height: '390',
+        // width: '640',
+        // videoId: '1OTZ9rjFv78',
+        // playerVars: {
+        //   'widgetid': 1,
+        //   'playsinline': 1,
+        //   'enablejsapi': 1
+        // },
         events: {
           'onReady': onPlayerReady,
           'onStateChange': onPlayerStateChange,
